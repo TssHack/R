@@ -31,8 +31,8 @@ main_menu_buttons = InlineKeyboard([
     [InlineKeyboardButton("کانال ما", url="https://ble.ir/shafag_tm")]
 ])
 
-@bot.on_message(filters.command("start"))
-async def start_handler(client, message):
+@bot.on_message()
+async def handle_message(message):
     chat_id = message.chat.id
 
     if str(chat_id) not in users:
@@ -41,8 +41,8 @@ async def start_handler(client, message):
 
     await bot.send_message(chat_id, "**سلام! 👋**\nبرای پیگیری مرسوله تیپاکس، کد رهگیری را وارد کنید.", reply_markup=main_menu_buttons)
 
-@bot.on_message(filters.command("admin") & filters.user(ADMIN_ID))
-async def admin_handler(client, message):
+@bot.on_message()
+async def handle_message(message):
     chat_id = message.chat.id
     user_count = len(users)
     
@@ -52,8 +52,8 @@ async def admin_handler(client, message):
     
     await bot.send_message(chat_id, "🔧 **پنل مدیریت**\nلطفاً یک گزینه را انتخاب کنید:", reply_markup=buttons)
 
-@bot.on_message(filters.text & ~filters.command)
-async def track_package(client, message):
+@bot.on_message()
+async def handle_message(message):
     chat_id = message.chat.id
     tracking_code = message.text.strip()
 
@@ -109,7 +109,7 @@ async def track_package(client, message):
         await bot.edit_message_text(chat_id, please_wait.message_id, "❌ **خطا در دریافت اطلاعات. لطفاً بعداً تلاش کنید.**")
 
 @bot.on_callback_query()
-async def callback_handler(client, query):
+async def on_callback(callback_query):
     chat_id = query.message.chat.id
     message_id = query.message.message_id
     data = query.data
