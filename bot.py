@@ -4,13 +4,12 @@ from balethon.objects import InlineKeyboard, ReplyKeyboard, InlineKeyboardButton
 from balethon import Client
 
 # اطلاعات ربات
-API_TOKEN = "2071296181:C1ouATv8fb7OjzcR5y8aqlwtEnxlkPrMFCtNzqGz"
+bot_token = "2071296181:C1ouATv8fb7OjzcR5y8aqlwtEnxlkPrMFCtNzqGz"
 TIPAX_API = "https://open.wiki-api.ir/apis-1/TipaxInfo?code="
 ADMIN_ID = 2143480267  # آیدی ادمین
 
 # راه‌اندازی بات
-bot = Bot(API_TOKEN)
-
+bot = Client(bot_token)
 # دیتابیس سبک
 DB_FILE = "users.json"
 
