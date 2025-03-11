@@ -14,17 +14,18 @@ bot = Client(bot_token)
 # دیتابیس سبک
 DB_FILE = "users.json"
 
+# تلاش برای بارگذاری کاربران از فایل JSON
 try:
     with open(DB_FILE, "r", encoding="utf-8") as f:
-        users = json.load(f)
-except FileNotFoundError:
-    users = {}
+        file_content = f.read().strip()  # حذف فضای خالی و کاراکترهای اضافی
+        users = json.loads(file_content) if file_content else {}  # بررسی اگر فایل خالی بود
+except (FileNotFoundError, json.JSONDecodeError):
+    users = {}  # اگر فایل وجود نداشت یا JSON نامعتبر بود، مقدار پیش‌فرض را تنظیم کن
 
-# ذخیره کاربران
+# ذخیره کاربران در فایل
 def save_users():
     with open(DB_FILE, "w", encoding="utf-8") as f:
         json.dump(users, f, indent=2, ensure_ascii=False)
-
 # دکمه‌های منو اصلی
 main_menu_buttons = InlineKeyboard([
     [InlineKeyboardButton("ℹ️ راهنما", callback_data="help")],
