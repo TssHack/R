@@ -1,7 +1,7 @@
 import json
 import requests
-from balethon import Bot, filters
-from balethon.types import InlineKeyboardMarkup, InlineKeyboardButton
+from balethon.objects import InlineKeyboard, ReplyKeyboard, InlineKeyboardButton
+from balethon import Client
 
 # اطلاعات ربات
 API_TOKEN = "2071296181:C1ouATv8fb7OjzcR5y8aqlwtEnxlkPrMFCtNzqGz"
@@ -26,7 +26,7 @@ def save_users():
         json.dump(users, f, indent=2, ensure_ascii=False)
 
 # دکمه‌های منو اصلی
-main_menu_buttons = InlineKeyboardMarkup([
+main_menu_buttons = InlineKeyboard([
     [InlineKeyboardButton("ℹ️ راهنما", callback_data="help")],
     [InlineKeyboardButton("بازوی صراط", url="https://ble.ir/seratbot")],
     [InlineKeyboardButton("کانال ما", url="https://ble.ir/shafag_tm")]
@@ -47,7 +47,7 @@ async def admin_handler(client, message):
     chat_id = message.chat.id
     user_count = len(users)
     
-    buttons = InlineKeyboardMarkup([
+    buttons = InlineKeyboard([
         [InlineKeyboardButton(f"👥 تعداد کاربران: {user_count}", callback_data="show_user_count")]
     ])
     
@@ -100,7 +100,7 @@ async def track_package(client, message):
         last_update = message.date.strftime("%Y-%m-%d %H:%M:%S")
         parcel_info += f"\n🕰 **آخرین بروزرسانی:** {last_update}"
 
-        await bot.edit_message_text(chat_id, please_wait.message_id, parcel_info, reply_markup=InlineKeyboardMarkup([
+        await bot.edit_message_text(chat_id, please_wait.message_id, parcel_info, reply_markup=InlineKeyboard([
             [InlineKeyboardButton("🔙 بازگشت به منو اصلی", callback_data="main_menu")],
             [InlineKeyboardButton("ارتباط با سازنده بازو", url="https://ble.ir/devehsan")]
         ]))
@@ -126,7 +126,7 @@ async def callback_handler(client, query):
 1️⃣ **کد رهگیری تیپاکس** خود را ارسال کنید.
 2️⃣ اطلاعات مرسوله برای شما نمایش داده می‌شود. 📦
         """
-        await bot.edit_message_text(chat_id, message_id, help_text, reply_markup=InlineKeyboardMarkup([
+        await bot.edit_message_text(chat_id, message_id, help_text, reply_markup=InlineKeyboard([
             [InlineKeyboardButton("🔙 بازگشت به منو اصلی", callback_data="main_menu")]
         ]))
 
